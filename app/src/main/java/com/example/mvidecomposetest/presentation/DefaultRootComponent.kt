@@ -1,6 +1,5 @@
 package com.example.mvidecomposetest.presentation
 
-import android.os.Parcelable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -9,7 +8,7 @@ import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import com.example.mvidecomposetest.domain.Contact
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 class DefaultRootComponent(
     componentContext: ComponentContext
@@ -21,7 +20,8 @@ class DefaultRootComponent(
         source = navigation,
         initialConfiguration = Config.ContactList,
         handleBackButton = true,
-        childFactory = ::child
+        childFactory = ::child,
+        serializer =
     )
 
     private fun child(
@@ -65,15 +65,13 @@ class DefaultRootComponent(
         }
     }
 
-    private sealed interface Config : Parcelable {
+    @Serializable
+    private sealed interface Config {
 
-        @Parcelize
         object ContactList : Config
 
-        @Parcelize
         object AddContact : Config
 
-        @Parcelize
         data class EditContact(val contact: Contact) : Config
     }
 }

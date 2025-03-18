@@ -1,8 +1,7 @@
 package com.example.mvidecomposetest.presentation
 
-import android.os.Parcelable
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 interface AddContactComponent {
 
@@ -14,9 +13,9 @@ interface AddContactComponent {
 
     fun onSaveContactClicked()
 
-    @Parcelize
+    @Serializable
     data class Model(
         val username: String,
         val phone: String
-    ) : Parcelable
+    )
 }

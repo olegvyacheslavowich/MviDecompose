@@ -17,7 +17,7 @@ class DefaultAddContactComponent(
     private val addContactUseCase = AddContactUseCase(repository)
 
     init {
-        stateKeeper.register(KEY) {
+        stateKeeper.register(KEY, AddContactComponent.Model.) {
             model.value
         }
     }
