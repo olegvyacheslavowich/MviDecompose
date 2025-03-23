@@ -16,9 +16,8 @@ class DefaultContactListComponent(
     val onAddContactRequested: () -> Unit
 ) : ContactListComponent, ComponentContext by componentContext {
 
-    private val repository = RepositoryImpl
-    private val getContactsUseCase = GetContactsUseCase(repository)
-    private val coroutineScope = componentScope()
+    lateinit var contactListStore: ContactListStore
+
 
     override val model: StateFlow<ContactListComponent.Model> = getContactsUseCase()
         .map { ContactListComponent.Model(it) }
@@ -29,10 +28,11 @@ class DefaultContactListComponent(
         )
 
     override fun onContactClicked(contact: Contact) {
-        onEditingContactRequested(contact)
+        contactListStore.accept(ContactListStore.Intent.ChangeContact(contact))
     }
 
     override fun onAddContactClicked() {
-        onAddContactRequested()
+        contactListStore.accept(ContactListStore.Intent.AddContact)
+
     }
 }

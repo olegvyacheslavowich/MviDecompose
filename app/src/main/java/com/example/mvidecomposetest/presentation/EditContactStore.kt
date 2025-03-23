@@ -16,6 +16,7 @@ interface EditContactStore :
     }
 
     data class State(
+        val id: Int,
         val userName: String,
         val phoneNumber: String
     )
